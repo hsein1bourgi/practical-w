@@ -20,5 +20,5 @@ app.listen(PORT, () => {
     console.log(`Server Listening on ${PORT}`);
 });
 
-console.log("Hello my first CIv2 5t");
+console.log("Hello my first CIv 2 5t");
 

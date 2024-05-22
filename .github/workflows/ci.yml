@@ -11,17 +11,22 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2  # Update to the latest version
+        uses: actions/checkout@v3  # Update to the latest version
 
       - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v2  # Update to the latest version
+        uses: docker/login-action@v3  # Update to the latest version
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Convert username to lowercase
+        id: to-lower
+        run: echo "::set-output name=username::$(echo ${{ github.actor }} | tr '[:upper:]' '[:lower:]')"
+
       - name: Build Docker image
-        run: docker build -t ghcr.io/${{ github.actor }}/practical-w:latest .
+        run: docker build -t ghcr.io/${{ steps.to-lower.outputs.username }}/practical-w:latest .
 
       - name: Push Docker image to GHCR
-        run: docker push ghcr.io/${{ github.actor }}/practical-w:latest
+        run: docker push ghcr.io/${{ steps.to-lower.outputs.username }}/practical-w:latest
+

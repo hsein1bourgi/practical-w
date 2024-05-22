@@ -14,7 +14,7 @@ app.get('/health-check', (req, res) => {
     res.status(200).json({ status: 'UP' });
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 80;
 
 app.listen(PORT, () => {
     console.log(`Server Listening on ${PORT}`);

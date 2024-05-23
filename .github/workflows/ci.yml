@@ -9,7 +9,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2  # Update to the latest version
@@ -19,10 +18,14 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.EC2_RUN }}
+          password: ${{ secrets.GHCR_PAT }}
+
+      - name: Convert username to lowercase
+        id: to-lower
+        run: echo "username=$(echo ${{ github.actor }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
       - name: Build Docker image
-        run: sudo docker build -t ghcr.io/hsein1bourgi/practical-w:latest .
+        run: docker build -t ghcr.io/${{ env.username }}/practical-w:latest .
 
       - name: Push Docker image to GHCR
-        run: sudo docker push ghcr.io/hsein1bourgi/practical-w:latest
+        run: docker push ghcr.io/${{ env.username }}/practical-w:latest

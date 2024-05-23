@@ -13,12 +13,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Ensure Docker group membership
+        run: |
+          sudo usermod -aG docker $USER
+          newgrp docker
+          sudo systemctl restart docker
+
       - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y pass gnupg2
-          sudo usermod -aG docker $USER
-          newgrp docker
 
       - name: Configure Docker to use pass
         run: |

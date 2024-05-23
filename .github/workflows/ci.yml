@@ -21,7 +21,7 @@ jobs:
           password: ${{ secrets.GHCR_PAT }}
 
       - name: Build Docker image
-        run: docker build -t ghcr.io/hsein1bourgi/practical-w:latest .
+        run: sudo docker build -t ghcr.io/hsein1bourgi/practical-w:latest .
 
       - name: Push Docker image to GHCR
-        run: docker push ghcr.io/hsein1bourgi/practical-w:latest
+        run: sudo docker push ghcr.io/hsein1bourgi/practical-w:latest

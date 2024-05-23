@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Log in to GitHub Container Registry
-        run: echo "${{ secrets.EC2_RUN }}" | sudo docker login ghcr.io -u hsein1bourgi --password-stdin
+        run: echo "${{ secrets.GHCR_PAT }}" | sudo docker login ghcr.io -u hsein1bourgi --password-stdin
 
       - name: Build Docker image
         run: sudo docker build -t ghcr.io/hsein1bourgi/practical-w:latest .

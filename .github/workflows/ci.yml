@@ -11,10 +11,31 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2  # Update to the latest version
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pass gnupg2
+
+      - name: Configure Docker to use pass
+        run: |
+          echo "{\"credsStore\":\"pass\"}" > ~/.docker/config.json
+          gpg --batch --gen-key <<EOF
+          %no-protection
+          Key-Type: RSA
+          Key-Length: 2048
+          Subkey-Type: RSA
+          Subkey-Length: 2048
+          Name-Real: Docker
+          Name-Email: docker@example.com
+          Expire-Date: 0
+          EOF
+          gpg --list-secret-keys --keyid-format LONG
+          pass init "docker@example.com"
 
       - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v2  # Update to the latest version
+        uses: docker/login-action@v2
         with:
           registry: ghcr.io
           username: ${{ github.actor }}

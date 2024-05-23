@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: HSEIN
+    runs-on: self-host
 
     steps:
       - name: Checkout repository

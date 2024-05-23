@@ -18,7 +18,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GHCR_PAT }}
+          password: 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
 
       - name: Build Docker image
         run: sudo docker build -t ghcr.io/hsein1bourgi/practical-w:latest .

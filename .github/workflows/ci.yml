@@ -11,18 +11,20 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2  # Update to the latest version
+        uses: actions/checkout@v2
+
+      - name: Ensure Docker is Running
+        run: sudo systemctl start docker
 
       - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v2  # Update to the latest version
+        uses: docker/login-action@v2
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_PAT }}
-          
 
       - name: Build Docker image
-        run: docker build -t ghcr.io/hsein1bourgi/practical-w:latest .
+        run: sudo docker build -t ghcr.io/hsein1bourgi/practical-w:latest .
 
       - name: Push Docker image to GHCR
-        run: docker push ghcr.io/hsein1bourgi/practical-w:latest
+        run: sudo docker push ghcr.io/hsein1bourgi/practical-w:latest

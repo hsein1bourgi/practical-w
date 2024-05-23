@@ -20,6 +20,7 @@ jobs:
 
       - name: Configure Docker to use pass
         run: |
+          mkdir -p ~/.docker
           echo "{\"credsStore\":\"pass\"}" > ~/.docker/config.json
           gpg --batch --gen-key <<EOF
           %no-protection
@@ -50,4 +51,3 @@ jobs:
 
       - name: Push Docker image to GHCR
         run: docker push ghcr.io/${{ env.username }}/practical-w:latest
-

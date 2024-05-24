@@ -8,4 +8,6 @@ on:
 jobs:
   build-and-push:
     uses: ./.github/workflows/action.yml
+    secrets:
+      GHCR_PAT: ${{ secrets.GHCR_PAT }}
     

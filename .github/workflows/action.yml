@@ -8,7 +8,7 @@ jobs:
 
     steps: 
       - name: Checkout repositry 
-        uses: action/checkout@v2
+        uses: actions/checkout@v2
 
       - name: Login Github Container D
         run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u Hsein1bourgi --password-stdin

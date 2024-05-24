@@ -1,1 +1,23 @@
+name: Docker build and Push 
+on: 
+  workflow_call: {}
 
+jobs:
+  build-and-push:
+    runs-on: self-hosted
+
+    steps: 
+      - name: Checkout repositry 
+        uses: action/checkout@v2
+
+      - name: Login Github Container
+        run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u Hsein1bourgi --password-stdin
+
+      - name: Docker Build Image
+        run: sudo docker build -t ghcr.io/hsein1bourgi.practical-w:latest .
+
+      - name: Push Docker image to GHCR 
+        run: sudo docker push ghcr.io/hsein1bourgi/practical-w:latest
+
+    
+   

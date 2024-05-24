@@ -3,7 +3,7 @@ on:
   workflow_call:
     secrets:
       GHCR_PAT:
-        required: true
+        required: false
 
 jobs:
   build-and-push:

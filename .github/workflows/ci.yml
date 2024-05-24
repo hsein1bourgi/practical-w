@@ -1,4 +1,4 @@
-name: CI Docker Build and Push
+name: CI Workflow
 
 on:
   push:
@@ -6,18 +6,8 @@ on:
       - main
 
 jobs:
-  build:
-    runs-on: self-hosted
+  build-and-push:
+    uses: ./.github/workflows/docker-build-push.yml
+    secrets:
+      GHCR_PAT: ${{ secrets.GHCR_PAT }}
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Log in to GitHub Container Registry
-        run: echo "${{ secrets.GHCR_PAT }}" | sudo docker login ghcr.io -u hsein1bourgi --password-stdin
-
-      - name: Build Docker image
-        run: sudo docker build -t ghcr.io/hsein1bourgi/practical-w:latest .
-
-      - name: Push Docker image to GHCR
-        run: sudo docker push ghcr.io/hsein1bourgi/practical-w:latest

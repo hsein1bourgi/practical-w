@@ -1,6 +1,9 @@
 name: Docker build and Push 
-on: 
-  workflow_call: {}
+on:
+  workflow_call:
+    secrets:
+      GHCR_PAT:
+        required: true
 
 jobs:
   build-and-push:

@@ -15,7 +15,14 @@ jobs:
 
       - name: Login Github Container D
         run: echo "${{ secrets.GHCR_PAT }}" | sudo docker login ghcr.io -u Hsein1bourgi --password-stdin
+     
+      - name: Install npm dependencies
+        run: sudo apt-get update && sudo apt install npm 
 
+      - name: Initiate ndoe.js
+        if: success()
+        run: npm init -y
+        
       - name: Docker Build Image
         run: sudo docker build -t ghcr.io/hsein1bourgi/practical-w:latest .
 

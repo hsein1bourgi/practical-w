@@ -7,7 +7,15 @@ on:
 
 jobs:
   build-and-push:
-    uses: ./.github/workflows/action.yml
-    secrets:
-      GHCR_PAT: ${{ secrets.GHCR_PAT }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Build and push Docker image
+        uses: ./.github/workflows/action.yml
+        with:
+          GHCR_PAT: ${{ secrets.GHCR_PAT }}
+
   

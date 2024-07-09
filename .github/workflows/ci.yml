@@ -7,13 +7,6 @@ on:
 
 jobs:
   build-and-push:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Build and push Docker image
-        uses: ./.github/actions/build-and-push/action.yml
-        with:
-          GHCR_PAT: ${{ secrets.GHCR_PAT }}
+    uses: ./.github/actions/build-and-psuh/action.yml
+    secrets:
+      GHCR_PAT: ${{ secrets.GHCR_PAT }}

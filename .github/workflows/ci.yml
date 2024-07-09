@@ -13,7 +13,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Build and push Docker image
-        uses: ./.github/workflows/action.yml
-        with:
-          GHCR_PAT: ${{ secrets.GHCR_PAT }}
+      - name: Login to GitHub Container Registry
+        run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u hsein1bourgi --password-stdin
+
+      - name: Install npm dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y npm
+
+      - name: Initialize Node.js
+        run: npm init -y
+
+      - name: Build Docker image
+        run: docker build -t ghcr.io/hsein1bourgi/practical-w:latest .
+
+      - name: Push Docker image to GHCR
+        run: docker push ghcr.io/hsein1bourgi/practical-w:latest
+

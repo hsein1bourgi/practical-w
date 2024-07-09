@@ -7,6 +7,6 @@ on:
 
 jobs:
   build-and-push:
-    uses: ./.github/actions/build-and-psuh/action.yml
+    uses: ./.github/actions/build-and-push/action.yml
     secrets:
       GHCR_PAT: ${{ secrets.GHCR_PAT }}

@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Login to GitHub Container Registry
-        run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u hsein1bourgi --password-stdin
+        run: echo "${{ secrets.GHCR_PAT }}" | sudo docker login ghcr.io -u hsein1bourgi --password-stdin
 
       - name: Install npm dependencies
         run: |
@@ -25,8 +25,8 @@ jobs:
         run: npm init -y
 
       - name: Build Docker image
-        run: docker build -t ghcr.io/hsein1bourgi/practical-w:latest .
+        run: sudo docker build -t ghcr.io/hsein1bourgi/practical-w:latest .
 
       - name: Push Docker image to GHCR
-        run: docker push ghcr.io/hsein1bourgi/practical-w:latest
+        run: sudo docker push ghcr.io/hsein1bourgi/practical-w:latest
 

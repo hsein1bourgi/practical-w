@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hsein-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hsein-app
+  template:
+    metadata:
+      labels:
+        app: hsein-app
+    spec:
+      containers:
+      - name: hsein-app-container
+        image: ghcr.io/hsein1bourgi/practical-w:latest
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: ghcr-secret
+
+     

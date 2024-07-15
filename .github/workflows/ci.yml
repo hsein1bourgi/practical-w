@@ -34,9 +34,6 @@ jobs:
 
       - name: Initialize Node.js
         run: npm init -y
-
-      - name: Build Docker image
-        run: sudo docker build -t ghcr.io/hsein1bourgi/practical-w .
         
       - name: Extract metadata (tags, labels) for Docker
         id: meta
@@ -48,8 +45,6 @@ jobs:
             type=raw,value=${{ env.SHA }}
             type=raw,value=latest
 
-
-
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
@@ -57,4 +52,3 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-

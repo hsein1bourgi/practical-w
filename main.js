@@ -3,7 +3,7 @@ const app = express();
 
 
 app.get('/', (req, res) => {
-    res.send("Connect with update");
+    res.send("Connect");
 });
 
 app.get('/hello', (req, res) => {

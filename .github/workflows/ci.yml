@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: hsein1bourgi/practical-w
 
 jobs:
   build-and-push:
@@ -12,6 +15,14 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+
+      - name: Extract version
+        id: extract_version
+        run: |
+          TAG=$(git describe --tags --abbrev=0 || echo "v1.0.0")
+          SHA=$(git rev-parse --short HEAD)
+          echo "TAG=${TAG}" >> $GITHUB_ENV
+          echo "SHA=${SHA}" >> $GITHUB_ENV
 
       - name: Login to GitHub Container Registry
         run: echo "${{ secrets.GHCR_PAT }}" | sudo docker login ghcr.io -u hsein1bourgi --password-stdin
@@ -26,7 +37,25 @@ jobs:
 
       - name: Build Docker image
         run: sudo docker build -t ghcr.io/hsein1bourgi/practical-w:latest .
+        
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=${{ env.TAG }}
+            type=raw,value=${{ env.SHA }}
+            type=raw,value=latest
 
-      - name: Push Docker image to GHCR
-        run: sudo docker push ghcr.io/hsein1bourgi/practical-w:latest
+
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
 
